@@ -1,15 +1,16 @@
 {-# LANGUAGE OverloadedStrings #-}
+
 module Main (main) where
 
 import Web.Scotty
 import Data.Text.Lazy (Text)
 import qualified Data.Text.Lazy as TL
-
-
+import qualified Data.Text as T
+import qualified Data.ByteString.Lazy as BL
+import qualified Data.Text.Encoding as TE
 
 main :: IO ()
-main = do
-  main = scotty 3000 $ do
+main = scotty 3000 $ do
   -- GET /
   get "/" $ do
     text "Hello, World!"
@@ -21,5 +22,6 @@ main = do
 
   -- POST /echo
   post "/echo" $ do
-    bodyText <- body
-    text $ "You posted: " <> TL.fromStrict (decodeUtf8 bodyText)
+    bodyBytes <- body               -- ByteString Lazy
+    let bodyText = TL.fromStrict $ TE.decodeUtf8 $ BL.toStrict bodyBytes
+    text $ "You posted: " <> bodyText
