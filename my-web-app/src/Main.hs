@@ -10,7 +10,7 @@ import qualified Data.ByteString.Lazy as BL
 import qualified Data.Text.Encoding as TE
 
 main :: IO ()
-main = scotty 3000 $ do
+main = scotty 3000 $ do -- ポート3000番でWebサーバーを起動する関数
   -- GET /
   get "/" $ do
     text "Hello, World!"
