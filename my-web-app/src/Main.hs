@@ -31,6 +31,15 @@ main = scotty 3000 $ do -- ポート3000番でWebサーバーを起動する関�
 
   -}
 
+  {-
+    get :: RoutePattern -> ActionM () -> ScottyM ()
+
+    なぜ do 式を渡すの？
+      do は、「複数の処理を順番に行うブロック」です。
+      text "Hello, World!" も ActionM () という「副作用を伴う処理」です。
+      そのため、get に渡すべきなのは「ActionM () の処理」になります。
+  -}
+
   -- GET /hello/:name
   get "/hello/:name" $ do
     name <- param "name"
