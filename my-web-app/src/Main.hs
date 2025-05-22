@@ -40,6 +40,14 @@ main = scotty 3000 $ do -- ポート3000番でWebサーバーを起動する関�
       そのため、get に渡すべきなのは「ActionM () の処理」になります。
   -}
 
+  {-
+  ActionMとは？
+
+  「HTTPハンドラ処理を記述するための文脈（モナド）」です。
+
+
+  -}
+
   -- GET /hello/:name
   get "/hello/:name" $ do
     name <- param "name"
