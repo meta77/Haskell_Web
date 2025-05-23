@@ -62,6 +62,7 @@ main = scotty 3000 $ do -- ポート3000番でWebサーバーを起動する関�
     text $ "You posted: " <> bodyText
 
 
+  {-
   -- GET /form → フォーム表示
   get "/form" $ do
     html $
@@ -69,6 +70,16 @@ main = scotty 3000 $ do -- ポート3000番でWebサーバーを起動する関�
       "<label>Name: <input name='name' type='text'/></label>" <>
       "<button type='submit'>送信</button>" <>
       "</form>"
+  -}
+
+  get "/form" $ do
+    html . mconcat $
+      [ "<form method=\"POST\" action=\"/submit\">"
+        , "<label>Name: <input type=\"text\" name=\"name\" /></label>"
+        , "<button type=\"submit\">送信</button>"
+        , "</form>"
+      ]
+
 
 
   {-
