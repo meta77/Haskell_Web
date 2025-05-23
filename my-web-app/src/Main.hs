@@ -70,7 +70,23 @@ main = scotty 3000 $ do -- ポート3000番でWebサーバーを起動する関�
       "<button type='submit'>送信</button>" <>
       "</form>"
 
+
+  {-
+  post "/submit" $ do
+    bodyText <- body
+    text $ "受け取った生データ: " <> TL.fromStrict (TE.decodeUtf8 $ BL.toStrict bodyText)
+  -}
+
+  {-
   -- POST /submit → フォームの値を取得
   post "/submit" $ do
     name <- param "name" :: ActionM Text
     text $ "こんにちは、" <> name <> " さん！"
+  -}
+
+  post "/submit" $ do
+    paramsList <- params
+    let maybeName = lookup "name" paramsList
+    case maybeName of
+      Just name -> text $ "こんにちは、" <> TL.fromStrict name <> " さん！"
+      Nothing -> text $ "name パラメータが見つかりませんでした。受け取ったパラメータ一覧: " <> TL.pack (show paramsList)
