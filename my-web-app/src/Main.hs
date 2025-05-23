@@ -60,3 +60,17 @@ main = scotty 3000 $ do -- ポート3000番でWebサーバーを起動する関�
     bodyBytes <- body               -- ByteString Lazy
     let bodyText = TL.fromStrict $ TE.decodeUtf8 $ BL.toStrict bodyBytes
     text $ "You posted: " <> bodyText
+
+
+  -- GET /form → フォーム表示
+  get "/form" $ do
+    html $
+      "<form method='POST' action='/submit'>" <>
+      "<label>Name: <input name='name' type='text'/></label>" <>
+      "<button type='submit'>送信</button>" <>
+      "</form>"
+
+  -- POST /submit → フォームの値を取得
+  post "/submit" $ do
+    name <- param "name" :: ActionM Text
+    text $ "こんにちは、" <> name <> " さん！"
