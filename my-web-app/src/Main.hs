@@ -96,6 +96,7 @@ main = scotty 3000 $ do -- ポート3000番でWebサーバーを起動する関�
     text $ "こんにちは、" <> name <> " さん！"
   -}
 
+  -- 結果が空になったまま
   post "/submit" $ do
     paramsList <- params
     let maybeName = lookup "name" paramsList
